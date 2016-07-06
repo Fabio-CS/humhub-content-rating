@@ -1,0 +1,13 @@
+{
+    "id": "contentrating",
+    "name": "Content Rating",
+    "description": "Add rating to content",
+    "keywords": [
+        "rating"
+    ],
+    "humhub": {
+        "minVersion": "1.0"
+    },    
+    "screenshots": ["assets/img/screenshot-1.png", "assets/img/screenshot-2.png", "assets/img/screenshot-3.png"],
+    "version": "0.1"
+}

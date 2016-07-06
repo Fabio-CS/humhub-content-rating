@@ -1,0 +1,28 @@
+/* 
+    Created on : Jul 2, 2016, 9:49:11 PM
+    Author     : Fábio C.S. Miranda
+*/
+
+.rating-container {
+    margin-top: 5px;
+}
+.rating-container.rating-xs.rating-animate{
+    float: left;
+}
+
+.rating-container .average{
+    float: right;
+    width: 60px;
+    display: inline-block;
+    height: 50px;
+    text-align: center;
+}
+
+.rating-container .average h4{
+    margin-top: 0px;
+}
+
+.clearboth{
+    clear: both;
+    display: block;
+}
