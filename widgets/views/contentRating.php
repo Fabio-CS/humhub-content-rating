@@ -8,7 +8,7 @@ use yii\helpers\Url;
 Assets::register($this);
 ?>
 
-<div class="rating-container">
+<div class="content-rating-container">
     <input id="content_rating_<?=$object->content->id?>" name="content_rating_<?=$object->content->id?>" type="number" value="<?=  Rating::myRate($object->content->id, Yii::$app->user->id) ?>">
     <div class="average">
         <h4>Média<br><span id="content_rating_average_<?=$object->content->id?>"><?=Rating::getAverage($object->content->id)?></span></h4>

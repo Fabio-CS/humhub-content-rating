@@ -8,6 +8,7 @@ namespace app\modules\contentrating\models;
 use Yii;
 use humhub\modules\user\models\User;
 use humhub\modules\content\models\Content;
+use humhub\modules\tag\models\Tag;
 use yii\db\ActiveQuery;
 
 /**
@@ -84,6 +85,76 @@ class Rating extends \yii\db\ActiveRecord implements \humhub\modules\search\inte
         }
     }
     
+    public static function getUserTagAverage($contents){
+        $ratedTags = array();
+        foreach ($contents as $content) {
+            $groupedTagRates = Rating::groupTagRatings($content);
+            
+            if($groupedTagRates){
+                $ratedTags[] = $groupedTagRates;
+            }
+        }
+        
+        if(count($ratedTags) > 0){
+           return Rating::groupTagRatingsAverage($ratedTags);
+        } else {
+           return false;
+        }
+    }
+        
+    
+    protected static function groupTagRatings($content){
+        $groupedTagsRates = array();
+        $contentAverage = Rating::getAverage($content->id);
+        $contentTags = $content->tags;
+        if($contentTags){
+            foreach ($contentTags as $tag) {
+                $tag->rating = $contentAverage;
+                $groupedTagsRates["$tag->name"] = $tag->rating;
+            }
+        }
+        if(count($groupedTagsRates) > 0) {
+            return $groupedTagsRates;
+        }else{
+            return false;
+        }
+    }
+    
+    public static function hasContentTags($user){
+        $contentTags = array();
+        $contents = $user->contents;
+        foreach ($contents as $content) {
+            $contentTags[] = $content->tags;
+        }
+        if (count(array_filter($contentTags)) > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    protected static function groupTagRatingsAverage($ratedTags){
+        $groupedTags = array();
+        foreach ($ratedTags as $arrayTags) {
+            foreach ($arrayTags as $key => $value) {
+                $groupedTags["$key"][] = $value;
+            }
+        }
+        
+        foreach ($groupedTags as $tagName => $allRates) {
+            $sum = 0;
+            foreach ($allRates as $rate) {
+                $sum += $rate;
+            }
+            $tagAverage = $sum / count($allRates);
+            $finalTag = new Tag();
+            $finalTag->name = $tagName;
+            $finalTag->rating = $tagAverage;
+            $resultTags[] = $finalTag;
+        }
+        return $resultTags;
+    }
+
     public static function isRated($contentId, $userId){
         $rating = Rating::find()->where(['content_id' => $contentId, 'user_id' => $userId])->all();
         if($rating){

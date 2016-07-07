@@ -3,14 +3,14 @@
     Author     : Fábio C.S. Miranda
 */
 
-.rating-container {
+.content-rating-container {
     margin-top: 5px;
 }
-.rating-container.rating-xs.rating-animate{
+.content-rating-container .rating-container.rating-xs.rating-animate{
     float: left;
 }
 
-.rating-container .average{
+.content-rating-container .average{
     float: right;
     width: 60px;
     display: inline-block;
@@ -18,7 +18,7 @@
     text-align: center;
 }
 
-.rating-container .average h4{
+.content-rating-container .average h4{
     margin-top: 0px;
 }
 
